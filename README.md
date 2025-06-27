@@ -125,4 +125,4 @@ Os resultados são salvos em `results/`:
 </table>
 
 
-Link do Projeto: [https://github.com/seu-usuario/Colorindo-Grafos-Dijkstra](https://github.com/seu-usuario/Colorindo-Grafos-Dijkstra)
+Link do Projeto: [https://github.com/DanielRodri87/Colorindo-Grafos-Dijkstra](https://github.com/seu-usuario/Colorindo-Grafos-Dijkstra)

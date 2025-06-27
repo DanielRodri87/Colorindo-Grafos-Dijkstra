@@ -10,6 +10,7 @@
 - [Uso](#-uso)
 - [Análises](#-análises)
 - [Resultados](#-resultados)
+- [Equipe](#-equipe)
 
 ## 🎯 Sobre o Projeto
 
@@ -92,21 +93,36 @@ Os resultados são salvos em `results/`:
 - Visualizações modernas e informativas
 - Relatórios detalhados de performance
 
-## 🤝 Contribuições
+## 👥 Equipe
 
-Contribuições são bem-vindas! Para contribuir:
-1. Fork o projeto
-2. Crie sua branch (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/alefCauan">
+        <img src="https://github.com/alefCauan.png" width="100px;" style="border-radius:50%"/><br>
+        <sub>
+          <b style="color: #0366d6;">Alef Cauan</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/DanielRodri87">
+        <img src="https://github.com/DanielRodri87.png" width="100px;" style="border-radius:50%"/><br>
+        <sub>
+          <b style="color: #0366d6;">Daniel Rodrigues</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/rayss4lves">
+        <img src="https://github.com/rayss4lves.png" width="100px;" style="border-radius:50%"/><br>
+        <sub>
+          <b style="color: #e83e8c;">Rayssa Alves</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
 
-## 📄 Licença
-
-Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
-
-## ✉️ Contato
-
-Seu Nome - [@seu_twitter](https://twitter.com/seu_twitter)
 
 Link do Projeto: [https://github.com/seu-usuario/Colorindo-Grafos-Dijkstra](https://github.com/seu-usuario/Colorindo-Grafos-Dijkstra)

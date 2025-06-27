@@ -1,6 +1,6 @@
 # 🎨 Coloração de Grafos via Dijkstra
 
-> Implementação e análise de um algoritmo híbrido para coloração de grafos utilizando ordenação por Dijkstra seguida de coloração gulosa.
+> Implementação e análise de um algoritmo híbrido para coloração de grafos utilizando ordenação por Dijkstra seguida do algoritmo de Welsh-Powell.
 
 ## 📋 Sumário
 - [Sobre o Projeto](#-sobre-o-projeto)
@@ -16,7 +16,7 @@
 
 Este projeto implementa uma abordagem híbrida para coloração de grafos, combinando:
 1. Algoritmo de Dijkstra para ordenação dos vértices
-2. Coloração gulosa sequencial
+2. Algoritmo de Welsh-Powell para coloração
 3. Análise detalhada de performance e qualidade
 
 ## 🛠 Tecnologias
@@ -88,7 +88,7 @@ Os resultados são salvos em `results/`:
 
 - Geração inteligente de grafos aleatórios
 - Implementação otimizada de Dijkstra
-- Coloração gulosa eficiente
+- Coloração eficiente via Welsh-Powell
 - Análise estatística robusta
 - Visualizações modernas e informativas
 - Relatórios detalhados de performance

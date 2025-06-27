@@ -102,31 +102,43 @@ def dijkstra_path_order(graph: nx.Graph, source: int = 0) -> List[int]:
         # Fallback para grafos desconexos
         return list(graph.nodes())
 
-def greedy_coloring_optimized(graph: nx.Graph, order: List[int]) -> Dict[int, int]:
+def welsh_powell_coloring(graph: nx.Graph, order: List[int]) -> Dict[int, int]:
     """
-    Implementa coloração gulosa otimizada com heurísticas de performance.
+    Implementa o algoritmo de Welsh-Powell para coloração de grafos.
+    Usa ordenação por graus dos vértices e coloração por conjuntos independentes.
     
     Args:
         graph (nx.Graph): Grafo a ser colorido
-        order (List[int]): Sequência de processamento dos vértices
+        order (List[int]): Ordem inicial dos vértices (já definida por Dijkstra)
     
     Returns:
-        Dict[int, int]: Mapeamento vértice -> cor (inteiros não-negativos)
+        Dict[int, int]: Mapeamento vértice -> cor
     """
     coloring = {}
+    # Ordena vértices por grau decrescente, mantendo ordem Dijkstra como desempate
+    vertices_by_degree = sorted(order, 
+                              key=lambda v: (graph.degree[v], -order.index(v)),
+                              reverse=True)
     
-    for node in order:
-        # Coleta cores dos vizinhos já coloridos
-        neighbor_colors = {coloring[neighbor] 
-                          for neighbor in graph.neighbors(node) 
-                          if neighbor in coloring}
+    color = 0
+    while vertices_by_degree:
+        # Seleciona vértices que podem receber a cor atual
+        available = vertices_by_degree.copy()
+        colored_vertices = []
         
-        # Encontra menor cor disponível (First Fit)
-        color = 0
-        while color in neighbor_colors:
-            color += 1
+        while available:
+            # Pega próximo vértice disponível
+            vertex = available[0]
+            coloring[vertex] = color
+            colored_vertices.append(vertex)
+            
+            # Remove vértice atual e seus vizinhos da lista de disponíveis
+            available.remove(vertex)
+            available = [v for v in available if v not in graph.neighbors(vertex)]
         
-        coloring[node] = color
+        # Remove vértices coloridos da lista principal
+        vertices_by_degree = [v for v in vertices_by_degree if v not in colored_vertices]
+        color += 1
     
     return coloring
 
@@ -149,51 +161,31 @@ def analyze_graph_properties(graph: nx.Graph) -> Dict[str, Any]:
         'avg_path_length': nx.average_shortest_path_length(graph) if nx.is_connected(graph) else 'N/A'
     }
 
-def run_dijkstra_coloring_pipeline(graph: nx.Graph, source: int = 0) -> Dict[str, Any]:
+def run_dijkstra_then_coloring(graph: nx.Graph, source: int = 0) -> Dict[str, Any]:
     """
-    Executa pipeline completo: Dijkstra → Ordenação → Coloração Gulosa.
-    
-    Args:
-        graph (nx.Graph): Grafo de entrada
-        source (int): Vértice inicial para Dijkstra
-    
-    Returns:
-        Dict[str, Any]: Métricas de performance e resultados
+    Executa pipeline completo: Dijkstra → Ordenação → Welsh-Powell.
     """
-    # Fase 1: Dijkstra com profiling
+    # Dijkstra
+    t0 = time.perf_counter()
     tracemalloc.start()
-    start_time = time.perf_counter()
-    
-    node_order = dijkstra_path_order(graph, source)
-    
-    dijkstra_time = time.perf_counter() - start_time
-    dijkstra_memory_current, dijkstra_memory_peak = tracemalloc.get_traced_memory()
+    order = dijkstra_path_order(graph, source)
+    d_current, d_peak = tracemalloc.get_traced_memory()
     tracemalloc.stop()
-    
-    # Fase 2: Coloração Gulosa com profiling
+    t1 = time.perf_counter()
+
+    # Welsh-Powell
     tracemalloc.start()
-    start_time = time.perf_counter()
-    
-    coloring = greedy_coloring_optimized(graph, node_order)
-    
-    coloring_time = time.perf_counter() - start_time
-    coloring_memory_current, coloring_memory_peak = tracemalloc.get_traced_memory()
+    coloring = welsh_powell_coloring(graph, order)
+    c_current, c_peak = tracemalloc.get_traced_memory()
     tracemalloc.stop()
-    
-    # Análise dos resultados
-    num_colors = len(set(coloring.values()))
-    graph_properties = analyze_graph_properties(graph)
-    
+    t2 = time.perf_counter()
+
     return {
-        'coloring': coloring,
-        'num_colors': num_colors,
-        'node_order': node_order,
-        'dijkstra_time': dijkstra_time,
-        'coloring_time': coloring_time,
-        'total_time': dijkstra_time + coloring_time,
-        'dijkstra_memory_kb': dijkstra_memory_peak / 1024,
-        'coloring_memory_kb': coloring_memory_peak / 1024,
-        'graph_properties': graph_properties
+        "coloring": coloring,
+        "dijkstra_time": t1 - t0,
+        "coloring_time": t2 - t1,
+        "dijkstra_memory": d_peak / 1024,
+        "coloring_memory": c_peak / 1024
     }
 
 def benchmark_multiple_runs(n_nodes: int, n_runs: int = 15, seed_base: int = 42) -> Dict[str, Any]:
@@ -222,15 +214,15 @@ def benchmark_multiple_runs(n_nodes: int, n_runs: int = 15, seed_base: int = 42)
     for run in range(n_runs):
         # Grafo diferente para cada execução
         graph = generate_weighted_graph(n_nodes, seed=seed_base + run)
-        pipeline_result = run_dijkstra_coloring_pipeline(graph)
+        pipeline_result = run_dijkstra_then_coloring(graph)
         
         # Coleta métricas
         results['dijkstra_times'].append(pipeline_result['dijkstra_time'])
         results['coloring_times'].append(pipeline_result['coloring_time'])
-        results['total_times'].append(pipeline_result['total_time'])
-        results['dijkstra_memories'].append(pipeline_result['dijkstra_memory_kb'])
-        results['coloring_memories'].append(pipeline_result['coloring_memory_kb'])
-        results['num_colors'].append(pipeline_result['num_colors'])
+        results['total_times'].append(pipeline_result['dijkstra_time'] + pipeline_result['coloring_time'])
+        results['dijkstra_memories'].append(pipeline_result['dijkstra_memory'])
+        results['coloring_memories'].append(pipeline_result['coloring_memory'])
+        results['num_colors'].append(len(set(pipeline_result['coloring'].values())))
         
         # Guarda amostras para visualização
         if run < 3:  # Apenas primeiras 3 para economia de memória
@@ -339,7 +331,7 @@ def create_performance_dashboard(node_sizes: List[int], benchmark_results: Dict)
     
     # Dashboard 2x2
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(16, 12))
-    fig.suptitle('📊 Dashboard de Performance - Algoritmo Dijkstra + Coloração Gulosa', 
+    fig.suptitle('📊 Dashboard de Performance - Algoritmo Dijkstra + Welsh-Powell', 
                  fontsize=18, fontweight='bold', y=0.98)
     
     # Gráfico 1: Tempo de Execução com Barras de Erro
@@ -414,7 +406,7 @@ def generate_detailed_report(node_sizes: List[int], benchmark_results: Dict) -> 
     report = []
     report.append("=" * 80)
     report.append("📊 RELATÓRIO DE ANÁLISE DE PERFORMANCE")
-    report.append("🔬 Algoritmo: Dijkstra + Coloração Gulosa de Grafos")
+    report.append("🔬 Algoritmo: Dijkstra + Welsh-Powell para Coloração de Grafos")
     report.append("=" * 80)
     report.append("")
     
@@ -466,7 +458,7 @@ def generate_detailed_report(node_sizes: List[int], benchmark_results: Dict) -> 
     report.append("\n\n🎯 CONCLUSÕES E INSIGHTS")
     report.append("-" * 40)
     report.append("• O algoritmo de Dijkstra domina o tempo de execução para grafos pequenos")
-    report.append("• A coloração gulosa mantém performance consistente")
+    report.append("• O algoritmo Welsh-Powell mantém performance consistente")
     report.append("• Uso de memória cresce de forma controlada")
     report.append("• Ordenação por Dijkstra produz colorações eficientes")
     
@@ -475,7 +467,7 @@ def generate_detailed_report(node_sizes: List[int], benchmark_results: Dict) -> 
     report.append("-" * 40)
     report.append("• Método adequado para grafos até 100 vértices")
     report.append("• Para grafos maiores, considerar heurísticas alternativas")
-    report.append("• Dijkstra + Coloração Gulosa oferece boa qualidade/performance")
+    report.append("• Dijkstra + Welsh-Powell oferece boa qualidade/performance")
     
     report.append("\n" + "=" * 80)
     
@@ -486,7 +478,7 @@ def main():
     Função principal que orquestra todos os experimentos e análises.
     """
     print("🚀 Iniciando análise completa de performance...")
-    print("📊 Algoritmo: Dijkstra + Coloração Gulosa de Grafos")
+    print("📊 Algoritmo: Dijkstra + Welsh-Powell para Coloração de Grafos")
     print("=" * 60)
     
     # Configuração dos experimentos

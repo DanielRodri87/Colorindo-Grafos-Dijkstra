@@ -1,6 +1,6 @@
 ================================================================================
 📊 RELATÓRIO DE ANÁLISE DE PERFORMANCE
-🔬 Algoritmo: Dijkstra + Coloração Gulosa de Grafos
+🔬 Algoritmo: Dijkstra + Welsh-Powell para Coloração de Grafos
 ================================================================================
 
 📋 RESUMO EXECUTIVO
@@ -13,51 +13,51 @@
 ----------------------------------------
 
 🔹 GRAFOS COM 5 VÉRTICES:
-   ⏱️  Tempo Dijkstra: 0.000147s (±0.000273s)
-   🎨 Tempo Coloração: 0.000014s (±0.000010s)
-   🚀 Tempo Total: 0.000160s
-   💾 Memória Total: 4.82 KB
+   ⏱️  Tempo Dijkstra: 0.000113s (±0.000269s)
+   🎨 Tempo Coloração: 0.000032s (±0.000005s)
+   🚀 Tempo Total: 0.000145s
+   💾 Memória Total: 4.86 KB
    🌈 Cores Utilizadas: 3.1 (±0.9)
 
 🔹 GRAFOS COM 10 VÉRTICES:
-   ⏱️  Tempo Dijkstra: 0.000098s (±0.000073s)
-   🎨 Tempo Coloração: 0.000022s (±0.000009s)
-   🚀 Tempo Total: 0.000120s
-   💾 Memória Total: 2.40 KB
-   🌈 Cores Utilizadas: 4.7 (±0.4)
+   ⏱️  Tempo Dijkstra: 0.000074s (±0.000020s)
+   🎨 Tempo Coloração: 0.000062s (±0.000006s)
+   🚀 Tempo Total: 0.000136s
+   💾 Memória Total: 2.34 KB
+   🌈 Cores Utilizadas: 4.5 (±0.5)
 
 🔹 GRAFOS COM 20 VÉRTICES:
-   ⏱️  Tempo Dijkstra: 0.000142s (±0.000052s)
-   🎨 Tempo Coloração: 0.000040s (±0.000013s)
-   🚀 Tempo Total: 0.000182s
-   💾 Memória Total: 4.41 KB
-   🌈 Cores Utilizadas: 7.1 (±0.8)
+   ⏱️  Tempo Dijkstra: 0.000146s (±0.000066s)
+   🎨 Tempo Coloração: 0.000167s (±0.000062s)
+   🚀 Tempo Total: 0.000312s
+   💾 Memória Total: 3.63 KB
+   🌈 Cores Utilizadas: 6.3 (±0.9)
 
 🔹 GRAFOS COM 50 VÉRTICES:
-   ⏱️  Tempo Dijkstra: 0.000546s (±0.000253s)
-   🎨 Tempo Coloração: 0.000155s (±0.000058s)
-   🚀 Tempo Total: 0.000701s
-   💾 Memória Total: 10.61 KB
-   🌈 Cores Utilizadas: 12.9 (±1.0)
+   ⏱️  Tempo Dijkstra: 0.000457s (±0.000203s)
+   🎨 Tempo Coloração: 0.000603s (±0.000172s)
+   🚀 Tempo Total: 0.001060s
+   💾 Memória Total: 10.20 KB
+   🌈 Cores Utilizadas: 12.0 (±0.5)
 
 🔹 GRAFOS COM 100 VÉRTICES:
-   ⏱️  Tempo Dijkstra: 0.001372s (±0.000668s)
-   🎨 Tempo Coloração: 0.000370s (±0.000036s)
-   🚀 Tempo Total: 0.001742s
-   💾 Memória Total: 22.87 KB
-   🌈 Cores Utilizadas: 21.5 (±0.7)
+   ⏱️  Tempo Dijkstra: 0.001589s (±0.000946s)
+   🎨 Tempo Coloração: 0.002119s (±0.000334s)
+   🚀 Tempo Total: 0.003708s
+   💾 Memória Total: 20.62 KB
+   🌈 Cores Utilizadas: 19.6 (±0.8)
 
 
 📊 ANÁLISE DE COMPLEXIDADE OBSERVADA
 ----------------------------------------
-• Fator médio de crescimento temporal: 2.15x
+• Fator médio de crescimento temporal: 2.53x
 • Fator médio de crescimento de memória: 1.72x
 
 
 🎯 CONCLUSÕES E INSIGHTS
 ----------------------------------------
 • O algoritmo de Dijkstra domina o tempo de execução para grafos pequenos
-• A coloração gulosa mantém performance consistente
+• O algoritmo Welsh-Powell mantém performance consistente
 • Uso de memória cresce de forma controlada
 • Ordenação por Dijkstra produz colorações eficientes
 
@@ -66,6 +66,6 @@
 ----------------------------------------
 • Método adequado para grafos até 100 vértices
 • Para grafos maiores, considerar heurísticas alternativas
-• Dijkstra + Coloração Gulosa oferece boa qualidade/performance
+• Dijkstra + Welsh-Powell oferece boa qualidade/performance
 
 ================================================================================

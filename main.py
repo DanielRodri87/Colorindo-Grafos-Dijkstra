@@ -82,6 +82,78 @@ def generate_weighted_graph(n_nodes: int, p: float = 0.5, seed: int = None) -> n
     
     return g
 
+# def dijkstra_algorithm(graph: nx.Graph, source: int) -> Dict[int, float]:
+#     distances = {vertex: float('infinity') for vertex in graph.nodes()}
+#     distances[source] = 0
+#     unvisited = set(graph.nodes())
+    
+#     while unvisited:
+#         current = min(unvisited, key=lambda x: distances[x])
+        
+#         if distances[current] == float('infinity'):
+#             break
+            
+#         unvisited.remove(current)
+        
+#         for neighbor in graph.neighbors(current):
+#             if neighbor in unvisited:
+#                 weight = graph[current][neighbor]['weight']
+#                 distance = distances[current] + weight
+                
+#                 if distance < distances[neighbor]:
+#                     distances[neighbor] = distance
+    
+#     return distances
+
+
+# Implementa o algoritmo de Dijkstra para encontrar as menores distâncias
+# de um nó de origem até todos os outros nós de um grafo ponderado
+# Parâmetros: grafo (nx.Graph), nó de origem (int)
+def dijkstra_algorithm(graph: nx.Graph, source: int) -> Dict[int, float]:
+    
+    # Inicializa todas as distâncias como infinito
+    distances = {vertex: float('infinity') for vertex in graph.nodes()}
+    
+    # A distância do nó de origem até ele mesmo é 0
+    distances[source] = 0
+    
+    # Cria um conjunto com todos os nós não visitados
+    unvisited = set(graph.nodes())
+    
+    # Continua enquanto houver nós não visitados
+    while unvisited:
+        
+        # Seleciona o nó com a menor distância conhecida
+        current = min(unvisited, key=lambda x: distances[x])
+        
+        # Se a menor distância for infinita, os nós restantes são inacessíveis
+        if distances[current] == float('infinity'):
+            break
+        
+        # Marca o nó atual como visitado
+        unvisited.remove(current)
+        
+        # Para cada vizinho do nó atual
+        for neighbor in graph.neighbors(current):
+            
+            # Considera apenas os vizinhos não visitados
+            if neighbor in unvisited:
+                
+                # Obtém o peso da aresta entre current e neighbor
+                weight = graph[current][neighbor]['weight']
+                
+                # Calcula a nova distância até o vizinho
+                distance = distances[current] + weight
+                
+                # Se a nova distância for menor, atualiza
+                if distance < distances[neighbor]:
+                    distances[neighbor] = distance
+    
+    # Retorna o dicionário com as menores distâncias encontradas
+    return distances
+
+
+
 def dijkstra_path_order(graph: nx.Graph, source: int = 0) -> List[int]:
     """
     Determina ordenação de vértices baseada em distâncias mínimas via algoritmo de Dijkstra.
@@ -93,14 +165,12 @@ def dijkstra_path_order(graph: nx.Graph, source: int = 0) -> List[int]:
     Returns:
         List[int]: Vértices ordenados por distância crescente do source
     """
-    try:
-        lengths = nx.single_source_dijkstra_path_length(graph, source)
-        # Ordena por distância, depois por ID do nó para desempate
-        ordered_nodes = sorted(lengths.keys(), key=lambda x: (lengths[x], x))
-        return ordered_nodes
-    except nx.NetworkXNoPath:
-        # Fallback para grafos desconexos
-        return list(graph.nodes())
+    # Calcula distâncias usando nossa implementação do Dijkstra
+    distances = dijkstra_algorithm(graph, source)
+    
+    # Ordena vértices por distância e usa ID como desempate
+    ordered_nodes = sorted(distances.keys(), key=lambda x: (distances[x], x))
+    return ordered_nodes
 
 def welsh_powell_coloring(graph: nx.Graph, order: List[int]) -> Dict[int, int]:
     """

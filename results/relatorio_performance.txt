@@ -13,45 +13,45 @@
 ----------------------------------------
 
 🔹 GRAFOS COM 5 VÉRTICES:
-   ⏱️  Tempo Dijkstra: 0.000113s (±0.000269s)
-   🎨 Tempo Coloração: 0.000032s (±0.000005s)
-   🚀 Tempo Total: 0.000145s
-   💾 Memória Total: 4.86 KB
+   ⏱️  Tempo Dijkstra: 0.000076s (±0.000047s)
+   🎨 Tempo Coloração: 0.000047s (±0.000023s)
+   🚀 Tempo Total: 0.000123s
+   💾 Memória Total: 2.03 KB
    🌈 Cores Utilizadas: 3.1 (±0.9)
 
 🔹 GRAFOS COM 10 VÉRTICES:
-   ⏱️  Tempo Dijkstra: 0.000074s (±0.000020s)
-   🎨 Tempo Coloração: 0.000062s (±0.000006s)
-   🚀 Tempo Total: 0.000136s
-   💾 Memória Total: 2.34 KB
+   ⏱️  Tempo Dijkstra: 0.000154s (±0.000046s)
+   🎨 Tempo Coloração: 0.000113s (±0.000030s)
+   🚀 Tempo Total: 0.000268s
+   💾 Memória Total: 2.22 KB
    🌈 Cores Utilizadas: 4.5 (±0.5)
 
 🔹 GRAFOS COM 20 VÉRTICES:
-   ⏱️  Tempo Dijkstra: 0.000146s (±0.000066s)
-   🎨 Tempo Coloração: 0.000167s (±0.000062s)
-   🚀 Tempo Total: 0.000312s
-   💾 Memória Total: 3.63 KB
+   ⏱️  Tempo Dijkstra: 0.000482s (±0.000166s)
+   🎨 Tempo Coloração: 0.000315s (±0.000074s)
+   🚀 Tempo Total: 0.000797s
+   💾 Memória Total: 4.66 KB
    🌈 Cores Utilizadas: 6.3 (±0.9)
 
 🔹 GRAFOS COM 50 VÉRTICES:
-   ⏱️  Tempo Dijkstra: 0.000457s (±0.000203s)
-   🎨 Tempo Coloração: 0.000603s (±0.000172s)
-   🚀 Tempo Total: 0.001060s
-   💾 Memória Total: 10.20 KB
+   ⏱️  Tempo Dijkstra: 0.001361s (±0.000659s)
+   🎨 Tempo Coloração: 0.000889s (±0.000262s)
+   🚀 Tempo Total: 0.002250s
+   💾 Memória Total: 8.66 KB
    🌈 Cores Utilizadas: 12.0 (±0.5)
 
 🔹 GRAFOS COM 100 VÉRTICES:
-   ⏱️  Tempo Dijkstra: 0.001589s (±0.000946s)
-   🎨 Tempo Coloração: 0.002119s (±0.000334s)
-   🚀 Tempo Total: 0.003708s
-   💾 Memória Total: 20.62 KB
+   ⏱️  Tempo Dijkstra: 0.004453s (±0.001396s)
+   🎨 Tempo Coloração: 0.003138s (±0.001112s)
+   🚀 Tempo Total: 0.007591s
+   💾 Memória Total: 22.17 KB
    🌈 Cores Utilizadas: 19.6 (±0.8)
 
 
 📊 ANÁLISE DE COMPLEXIDADE OBSERVADA
 ----------------------------------------
-• Fator médio de crescimento temporal: 2.53x
-• Fator médio de crescimento de memória: 1.72x
+• Fator médio de crescimento temporal: 2.84x
+• Fator médio de crescimento de memória: 1.90x
 
 
 🎯 CONCLUSÕES E INSIGHTS
